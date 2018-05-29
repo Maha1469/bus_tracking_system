@@ -1,0 +1,23 @@
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @stop.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @stop.longitude %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @stop.name %>
+</p>
+
+<p>
+  <strong>Bus ID:</strong>
+  <%= @stop.bus_id %>
+</p>
+
+<%= link_to 'Edit', edit_stop_path(@stop) %> |
+<%= link_to 'Back', stops_path %>

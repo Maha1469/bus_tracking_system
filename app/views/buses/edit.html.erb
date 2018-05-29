@@ -1,0 +1,14 @@
+<div class="row">
+  <center>
+    <h1>Edit Bus</h1>
+  </center>
+  <%= render 'form', bus: @bus %>
+  <div class="col-md-3"></div>
+  <div class="col-md-3">
+    <%= link_to 'Show', @bus, class:"btn btn-info btn-block"%>
+  </div>
+  <div class="col-md-3">
+    <%= link_to 'Back', buses_path, class:"btn btn-info btn-block" %>
+  </div>
+  <div class="col-md-4"></div>
+</div>

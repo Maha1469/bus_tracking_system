@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  roll_number: MyString
+  batch_number: MyString
+  semester: 1
+  department: MyString
+  approve: false
+  user_id: 1
+
+two:
+  name: MyString
+  roll_number: MyString
+  batch_number: MyString
+  semester: 1
+  department: MyString
+  approve: false
+  user_id: 1

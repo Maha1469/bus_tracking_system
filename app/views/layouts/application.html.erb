@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>University Transport Tracking System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <%if user_signed_in? %>
+        <div class="container-fluid">
+          <!-- Sidebar Holder -->
+          <nav id="sidebar">
+            <div id="dismiss">
+                <i class="glyphicon glyphicon-arrow-left"></i>
+            </div>
+            <div class="sidebar-header">
+                <h3 style="color:#FFFFFF;">UNIVERSITY TRANSPORT TRACKING SYSTEM</h3>
+            </div>
+            <ul class="list-unstyled components" style="list-style:fill;">
+              <p>Admin Dashboard</p>
+              <li><%= link_to "Dashboard", root_path%></li>
+              <li>
+                <a href="#bus_menu" data-toggle="collapse" aria-expanded="false">Buses</a>
+                <ul class="collapse list-unstyled" id="bus_menu" style="list-style:fill;">
+                  <li><%= link_to "Show All", buses_path%></li>
+                  <li><%= link_to "Add Bus", new_bus_path%></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#student_menu" data-toggle="collapse" aria-expanded="false">Students</a>
+                <ul class="collapse list-unstyled" id="student_menu" style="list-style:fill;">
+                  <li><%= link_to "Show All", students_path%></li>
+                </ul>
+              </li>
+              <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+            </ul>
+          </nav>
+          <!-- Page Content Holder -->
+          <div id="content">
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn" style="background:#D68910; padding:10px;font-weight:bold;font-size:16px;">
+                    <i class="glyphicon glyphicon-align-left"></i>
+                    <span>MENU</span>
+                  </button>
+                </div>
+              </div>
+            </nav>
+            <div class="col-md-12 col-xs-12"  >
+              <% if notice %>
+                <div id="notice_wrapper" class="my_notice">
+                  <center><p class="app_notice"><%= notice %></p></center>
+                </div>
+              <%elsif alert %>
+                <div id="notice_wrapper" class="my_alert">
+                  <center><p class="app_alert"><%= alert %></p></center>
+                </div>
+              <% end %>
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+        <div class="overlay"></div>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+      <%else%>
+        <div class="row">
+          <% if notice %>
+            <div id="notice_wrapper" class="my_notice">
+              <center><p class="app_notice"><%= notice %></p></center>
+            </div>
+          <%elsif alert %>
+            <div id="notice_wrapper" class="my_alert">
+              <center><p class="app_alert"><%= alert %></p></center>
+            </div>
+          <% end %>
+        </div>
+        <%= yield %>
+      <%end%>
+    </div>
+    <script>
+      $(document).ready(function(){
+      	setTimeout(function(){
+      	    $("#notice_wrapper").slideToggle('slow', function(){
+      	      $(this).remove();
+      	    });
+      	  }, 6000);
+      	$("#sidebar").mCustomScrollbar({
+      			theme: "minimal"
+      	});
+      	$('#dismiss, .overlay').on('click', function () {
+      			$('#sidebar').removeClass('active');
+      			$('.overlay').fadeOut();
+      	});
+      	$('#sidebarCollapse').on('click', function () {
+      			$('#sidebar').addClass('active');
+      			$('.overlay').fadeIn();
+      			$('.collapse.in').toggleClass('in');
+      			$('a[aria-expanded=true]').attr('aria-expanded', 'false');
+      	});
+      });
+    </script>
+  </body>
+</html>

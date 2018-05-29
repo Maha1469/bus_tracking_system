@@ -1,0 +1,28 @@
+<div class="jumbotron" style="padding-top:20px;margin-top:20px;">
+  <div class="row">
+    <h2 style="text-align:center;font-weight:bold;">ADMIN LOGIN</h2>
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+        <div class="form-group">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control"%>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, autocomplete: "off", class:"form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.submit "LOG-IN", class:"btn btn-block btn-success" %>
+        </div>
+      <% end %>
+      <div class="row" style="padding:10px;margin:10px;">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>

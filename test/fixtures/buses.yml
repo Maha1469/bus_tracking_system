@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  current_lat: 1.5
+  current_lan: 1.5
+  description: MyText
+  evening_start_time: 2018-05-06 12:27:23
+  evening_end_time: 2018-05-06 12:27:23
+  morning_start_time: 2018-05-06 12:27:23
+  morning: 
+  status: false
+  user_id: 1
+
+two:
+  current_lat: 1.5
+  current_lan: 1.5
+  description: MyText
+  evening_start_time: 2018-05-06 12:27:23
+  evening_end_time: 2018-05-06 12:27:23
+  morning_start_time: 2018-05-06 12:27:23
+  morning: 
+  status: false
+  user_id: 1

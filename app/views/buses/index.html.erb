@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-12">
+    <center><h1>LISTING ALL BUSES</h1></center>
+  </div>
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark" style="background:#D68910;color:#FFFFFF;font-weight:bold;cursor:pointer;">
+          <tr>
+            <th>Driver Email</th>
+            <th>Current Latitude</th>
+            <th>Current Longitude</th>
+            <th>Morning Start Time</th>
+            <th>Morning End Time</th>
+            <th>Evening Start Time</th>
+            <th>Evening End Time</th>
+            <th colspan="3" style="text-align:center;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @buses.each do |bus| %>
+            <tr style="color:#D68910;">
+              <td><%= bus.user.email%></td>
+              <td><%= bus.current_lat %></td>
+              <td><%= bus.current_lan %></td>
+              <td><%= bus.morning_start_time.strftime("%H:%M %S %p") %></td>
+              <td><%= bus.morning_end_time.strftime("%H:%M %S %p") %></td>
+              <td><%= bus.evening_start_time.strftime("%H:%M %S %p") %></td>
+              <td><%= bus.evening_end_time.strftime("%H:%M %S %p") %></td>
+              <td><%= link_to 'Show', bus, class:"btn btn-success"%></td>
+              <td><%= link_to 'Edit', edit_bus_path(bus), class:"btn btn-info"%></td>
+              <td><%= button_to 'Destroy', bus, method: :delete, data: { confirm: 'Are you sure to delete thi Bus?' }, class:"btn btn-danger" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <center><%= will_paginate @buses, renderer: BootstrapPagination::Rails %></center>
+  </div>
+</div>

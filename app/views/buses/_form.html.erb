@@ -1,0 +1,220 @@
+<script src="//maps.google.com/maps/api/js?key=AIzaSyAYU0nq1wYLDk5A_zV2jigbUqadM8Gy5Sc" type="text/javascript"></script>
+<script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+<script src='//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js' type='text/javascript'></script> <!-- only if you need custom infoboxes -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="jumbotron">
+      <%= form_for(bus) do |f| %>
+        <% if @user.errors.any? %>
+          <div class="form-group alert alert-error alert-block" id="error_explanation">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <% @user.errors.full_messages.each do |message| %>
+              <h6 class="heading_error"><%= message%></h6>
+            <% end %>
+          </div>
+        <% end %>
+        <% if bus.errors.any? %>
+          <div class="form-group alert alert-error alert-block" id="error_explanation">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <% bus.errors.full_messages.each do |message| %>
+              <h6 class="heading_error"><%= message%></h6>
+            <% end %>
+          </div>
+        <% end %>
+        <%if action_name == 'new' || action_name == 'create' %>
+          <div class="row" style="border: 2px solid #D68910; border-radius: 15px;">
+            <div class="col-md-12">
+              <center><h3>Registration for Driver</h3></center>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", required: true, placeholder:"Driver's E-mail" %>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <%= f.label :password %>
+                <%= f.password_field :password, autocomplete: "off", class:"form-control", required: true, placeholder:"Driver's Password" %>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <%= f.label :password_confirmation %><br />
+                <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control", required: true, placeholder:"Driver's Password Confirmation" %>
+              </div>
+            </div>
+          </div>
+          <br>
+        <%end%>
+        <div class="row" style="border: 2px solid #D68910; border-radius: 15px;">
+          <div class="col-md-12">
+            <center><h3>Driver's Bus Detail</h3></center>
+          </div>
+          <div class="col-md-12">
+            <div style='width: 100%;'>
+              <div id="map" style='width: 100%; height: 400px;'></div>
+            </div>
+          </div>
+          <div class="col-md-12 col-xs-12">
+            <div class="form-group">
+              <%= f.label :bus_number %>
+              <%= f.text_field :bus_number, class:"form-control", required: true, placeholder: "Bus Registration Number"%>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <div class="form-group">
+              <%= f.label :current_lat, "Current Latitude" %>
+              <%= f.number_field :current_lat, class:"form-control", step:"0.000000000000001", id:"map_lat",   required: true %>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <div class="form-group">
+              <%= f.label :current_lan, "Current Longitude" %>
+              <%= f.number_field :current_lan, class:"form-control", step:"0.000000000000001", id:"map_lng",   required: true %>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xs-12">
+            <div class="form-group">
+              <%= f.label :starting_lat, "Starting Latitude" %>
+              <%= f.number_field :starting_lat, class:"form-control", step:"0.000000000000001", id:"starting_lat",   required: true %>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <div class="form-group">
+              <%= f.label :starting_lan, "Starting Longitude" %>
+              <%= f.number_field :starting_lan, class:"form-control", step:"0.000000000000001", id:"starting_lan",   required: true %>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xs-12">
+            <div class="form-group">
+              <%= f.label :ending_lat, "Ending Latitude" %>
+              <%= f.number_field :ending_lat, class:"form-control", step:"0.000000000000001", id:"ending_lat",   required: true %>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <div class="form-group">
+              <%= f.label :ending_lan, "Ending Longitude" %>
+              <%= f.number_field :ending_lan, class:"form-control", step:"0.000000000000001", id:"ending_lan",   required: true %>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xs-12">
+            <div class="form-group">
+              <%= f.label :morning_start_time %><br>
+              <%= f.time_select :morning_start_time,{prompt: true}, {class:"form-control", style:"font-size: 0.9em;width:48%;display:inline-block;", required: true}%>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <div class="form-group">
+              <%= f.label :morning_end_time %><br>
+              <%= f.time_select :morning_end_time,{prompt: true}, {class:"form-control", style:"font-size: 0.9em;width:48%;display:inline-block;", required: true}%>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xs-12">
+            <div class="form-group">
+              <%= f.label :evening_start_time %><br>
+              <%= f.time_select :evening_start_time,{prompt: true}, {class:"form-control", style:"font-size: 0.9em;width:48%;display:inline-block;", required: true}%>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <div class="form-group">
+              <%= f.label :evening_end_time %><br>
+              <%= f.time_select :evening_end_time,{prompt: true}, {class:"form-control", style:"font-size: 0.9em;width:48%;display:inline-block;", required: true}%>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-xs-12">
+            <div class="form-group">
+              <%= f.label :description %>
+              <%= f.text_area :description, class:"form-control", style:"resize:none;", rows:3, required: true %>
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <div class="form-group">
+          <%= f.submit class:"btn btn-success btn-block" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+var x = document.getElementById("demo");
+var map_div = document.getElementById("map_div");
+function gmap_form(lat, lan) {
+  handler = Gmaps.build('Google');    // map init
+  //var geoloccontrol = new klokantech.GeolocationControl(handler, 15);
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    if (lat != 0 && lan != 0){//} lat.length > 0 && lan.length > 0) {    // statement check - new or edit view
+      markers = handler.addMarkers([    // print existent marker
+        {
+          "lat": lat,
+          "lng": lan,
+          "picture": {
+            "url": "/assets/pointer.png",
+            "width":  40,
+            "height": 40
+          },
+          "infowindow": "<b>" + "<%= bus.bus_number%>" + "</b><br>" + "<%= bus.description%>"
+        }
+      ]);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+      handler.getMap().setZoom(15);
+      console.log("Location Found");
+    }
+    else {    // show the empty map
+      handler.fitMapToBounds();
+      handler.map.centerOn([32.627301, 73.505493]);
+      handler.getMap().setZoom(15);
+      console.log("Location NOT Found");
+    }
+  });
+
+  var markerOnMap;
+
+  function placeMarker(location) {    // simply method for put new marker on map
+    if (markerOnMap) {
+      markerOnMap.setPosition(location);
+    }
+    else {
+      markerOnMap = new google.maps.Marker({
+        position: location,
+        map: handler.getMap()
+      });
+    }
+  }
+
+  google.maps.event.addListener(handler.getMap(), 'click', function(event) {    // event for click-put marker on map and pass coordinates to hidden fields in form
+    placeMarker(event.latLng);
+    document.getElementById("map_lat").value = event.latLng.lat();
+    document.getElementById("map_lng").value = event.latLng.lng();
+
+    document.getElementById("starting_lat").value = event.latLng.lat();
+    document.getElementById("starting_lan").value = event.latLng.lng();
+
+    document.getElementById("ending_lat").value = event.latLng.lat();
+    document.getElementById("ending_lan").value = event.latLng.lng();
+  });
+}
+$(document).ready(function(){
+  var lat = " <%= bus.current_lat %>";
+  var lan = " <%= bus.current_lan %>";
+  console.log("Bus Number: " + lat);
+  console.log("Bus Number: " + lan);
+  setTimeout(function(){
+    <%if action_name == 'new' || action_name == 'create' %>
+      gmap_form(0, 0);
+    <%else%>
+      gmap_form(lat, lan);
+    <%end%>
+  }, 500);
+});
+
+</script>
