@@ -20,7 +20,7 @@ class BusesController < ApplicationController
     @hash = Gmaps4rails.build_markers(@stops) do |s, marker|
       marker.lat s.latitude
       marker.lng s.longitude
-      marker.infowindow s.address
+      marker.infowindow s.name
     end
     @points = []
     @points << @h
